@@ -159,15 +159,14 @@ int DrawMandelbrot_intrinsics(RGBQUAD* window_buffer) {
                 int mask = _mm256_movemask_ps(cmp);
                 if (!mask)
                     break;
-
-       //TODO: зависимость по данным             
-                X_array = _mm256_sub_ps(x_square_array, y_square_array);
-                Y_array = _mm256_add_ps(Y_array, y0_array);
-                    
+//TODO: зависимость по данным 
                 N_array = _mm256_sub_epi32(N_array, _mm256_castps_si256(cmp)); 
-                
+
+                X_array = _mm256_sub_ps(x_square_array, y_square_array);
                 X_array = _mm256_add_ps(X_array, x0_array);
+
                 Y_array = _mm256_add_ps(xy_mul_array, xy_mul_array);
+                Y_array = _mm256_add_ps(Y_array, y0_array);
             }
 
             _mm256_storeu_si256((__m256i*)N_normal_array, N_array);
